@@ -41,26 +41,56 @@ function shuffle(array) {
  */
 /** this is the processes of clicking the cards. i have used event delegetion */
 
+const allCards=document.querySelector('.deck');  
+allCards.addEventListener('click',listenToCardEvent);
+
 function listenToCardEvent(evt){
     if(evt.target.nodeName === 'LI'){
         const eachCard=evt.target;
-        togglingUnit(eachCard);
-        addOpenedCards(eachCard);
-        console.log('I have toggled');
-
+        if(!openedCards.includes(eachCard) &&
+            !alreadyMatchedCards.includes(eachCard)){
+            togglingUnit(eachCard);
+            addOpenedCards(eachCard);
+        }
+        
     }
 }
 function togglingUnit(eachCard){
     eachCard.classList.toggle('open');
     eachCard.classList.toggle('show');
-   
+    
 }
+
 function addOpenedCards(eachCard){
     openedCards.push(eachCard);
     console.log(openedCards);
+    if(openedCards.length===2){
+        compareCards();
+        openedCards.length=0;
+    }
 }
-const allCards=document.querySelector('.deck');  
-allCards.addEventListener('click',listenToCardEvent);
-
 
 let openedCards=[];
+let alreadyMatchedCards=[];
+
+function compareCards(){
+    let x=openedCards[0];
+    let y=openedCards[1];
+    let xx=x.firstElementChild.className;
+    let yy=y.firstElementChild.className;
+    if(xx===yy){
+        x.classList.toggle('match');
+        y.classList.toggle('match');
+        alreadyMatchedCards.push(x);
+        alreadyMatchedCards.push(y);
+    } else{
+        setTimeout(function(){
+            hideTheCards(x.classList);
+            hideTheCards(y.classList);
+        },777);
+    }
+}
+function hideTheCards(hide){
+    hide.toggle('open');
+    hide.toggle('show');
+}
