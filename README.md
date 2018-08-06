@@ -3,7 +3,7 @@
 ## Table of Contents
 
 * [Instructions](#instructions)
-* [Contributing](#contributing)
+* [https://wekesa931.github.io/Memory-Game/](#Hosted Site with git pages)
 
 ## Instructions
 
