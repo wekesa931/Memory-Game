@@ -44,4 +44,4 @@ This is done by `function removeStars()`.
 After all the matches have been achieved, the `displayMessage()` function is run.
 
 ## Hosting
-[This project has been hosted in github pages](http://www.quora.com/Adam-DAngelo)
+[This project has been hosted in github pages HERE]( https://wekesa931.github.io/Memory-Game/)
