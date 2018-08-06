@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-### card shuffling
+### Card shuffling
 First, i wrote the function which picks a list of all the cards from the `deck`, sends them to the `shuffle()` function and returns them with a different order. The cards are then appended to the parent element, not as additional child elements but it it the order of arrangement that is changed. This is line **line 23-43 JS**
 ### Setting the Event Listener
 
@@ -40,5 +40,8 @@ The `hideTheCards()` function is run where the `open` and the `show` classes are
 The `function moveCounter()` ensures that every move is couted and registered.
 ### Star award
 This is done by `function removeStars()`.
-### Display essage module
+### Display message module
 After all the matches have been achieved, the `displayMessage()` function is run.
+
+## Hosting
+[This project has been hosted in github pages](http://www.quora.com/Adam-DAngelo)
