@@ -9,20 +9,35 @@
     <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+    <!--
+        This will be the modal of the gaame.When the game ends,
+        the statistics if the game will be declared here.
+    -->
+    <div class="winning_tab hide">
+        <div class="message_holder">
+            <img class="complete_image" src="img/tick.png" alt="complete">
+            <div class="line"></div>
+            <p class="stars_number">STARS: <span></span></p>
+            <p class="time_taken">TIME: <span></span></p>
+            <p class="moves_made">MOVES: <span></span></p>
+            <input class="refresh_button" type="button" value="Restart game" onClick="window.location.reload()">
+        </div>
 
+    </div>
     <div class="container">
         <header>
             <h1>Matching Game</h1>
         </header>
 
         <section class="score-panel">
+            <span class="clock">0:00</span>
         	<ul class="stars">
         		<li><i class="fa fa-star"></i></li>
         		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
+                <li><i class="fa fa-star"></i></li>
+            </ul>
 
-        	<span class="moves">3</span> Moves
+        	<span class="moves">0</span> Moves
 
             <div class="restart">
         		<i class="fa fa-repeat"></i>

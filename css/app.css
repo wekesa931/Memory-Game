@@ -107,3 +107,54 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.clock{
+    padding-right: 10px;
+}
+
+.winning_tab{
+    position: absolute;
+    height: 140%;
+    width: 100%;
+    background-color: rgb(0,0,0,0.438);
+    z-index: 1;
+}
+.message_holder{
+    background-color: white;
+    height: 40%;
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 20%;
+    border-radius:3%;
+}
+.complete_image{
+    height: 40%;
+    margin-left: 35%;
+    width:auto;
+}
+.line{
+    height: 1px;
+    width: 80%;
+    background-color: #02b3e4;
+    margin-left: 10%;
+}
+.stars_number, .time_taken, .moves_made{
+    margin-left: 40%;
+}
+.refresh_button{
+    padding: 3%;
+    background-color: #c3f7d7;
+    border-radius: 12%;
+    margin-left: 35%;
+}
+.hide{
+    display:none;
+}
+.squeeze{
+    -moz-transform: skewX(30deg);
+    -moz-transform: scale(1.5, 0.0);
+    -webkit-transform: skewX(30deg);
+    -webkit-transform: scale(1.5, 0.0);
+    transform: skewX(30deg);
+    transform: scale(1.5, 0.0);
+   }

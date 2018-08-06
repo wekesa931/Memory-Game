@@ -1,16 +1,34 @@
-/*
- * Create a list that holds all of your cards
+/**
+ * I began with the variable declarations
  */
 
 
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
+let theTime=0;
+let minutes=theTime/60;
+let seconds=theTime%60;
+let moves=0;
+let timerOff=true;
+let theClock;
+let completeArray=[];
+const allCards=document.querySelector('.deck');  
+const restartButton=document.querySelector('.restart');
+
+/**
+ *@description This function picks the cards as a list and sends them to the shuffle function
+ * which shuffles the cards and returns them, appending them to the parent element.
+ * Appending them however, does not create a new list of items but rather changes their
+ * order in the parent element.
  */
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+function shuffleUnit(){
+    const cardsToBeShuffled= Array.from(document.querySelectorAll('.deck li'));
+    const shuffling=shuffle(cardsToBeShuffled);
+    for (const cards of shuffling){
+        allCards.appendChild(cards);
+    }
+}
+shuffleUnit();
+
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -25,53 +43,63 @@ function shuffle(array) {
     return array;
 }
 
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in 
-        another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in 
-        another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position
-        (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
+/**
+ * Here we have the click event listener. whenever a card is clicked, the 
+ * following process begins.
  */
-/** this is the processes of clicking the cards. i have used event delegetion */
-
-const allCards=document.querySelector('.deck');  
 allCards.addEventListener('click',listenToCardEvent);
 
+/**
+ * @description The function checks whether the card has already been selected or has already
+ * been matched and depending on the result of the check, initiates the next process.
+ */
+
 function listenToCardEvent(evt){
+    if(timerOff){
+        setTheTime();
+        timerOff=false;
+    }
     if(evt.target.nodeName === 'LI'){
         const eachCard=evt.target;
         if(!openedCards.includes(eachCard) &&
-            !alreadyMatchedCards.includes(eachCard)){
+            !eachCard.classList.contains('match')){
             togglingUnit(eachCard);
             addOpenedCards(eachCard);
         }
         
     }
 }
+/**
+ * the cards are toggled to open
+ *  
+ */
+
 function togglingUnit(eachCard){
     eachCard.classList.toggle('open');
     eachCard.classList.toggle('show');
-    
+   
 }
+
+/**
+ * 
+ * @description This function moves the selected cards to
+ * a temporary array for comparison 
+ * @argument {the selected card} eachCard
+ */
 
 function addOpenedCards(eachCard){
     openedCards.push(eachCard);
-    console.log(openedCards);
     if(openedCards.length===2){
+        moveCounter();
         compareCards();
         openedCards.length=0;
     }
 }
 
 let openedCards=[];
-let alreadyMatchedCards=[];
+/**
+ * the cards are comppared here
+ */
 
 function compareCards(){
     let x=openedCards[0];
@@ -81,16 +109,111 @@ function compareCards(){
     if(xx===yy){
         x.classList.toggle('match');
         y.classList.toggle('match');
-        alreadyMatchedCards.push(x);
-        alreadyMatchedCards.push(y);
-    } else{
+        completeArray.push(x);
+        completeArray.push(y);
+        displayMessage();
+        } else{
         setTimeout(function(){
             hideTheCards(x.classList);
             hideTheCards(y.classList);
         },777);
     }
 }
+/**
+ * 
+ * Untoggled cards are closed
+ */
 function hideTheCards(hide){
     hide.toggle('open');
     hide.toggle('show');
+}
+/**
+ * @description this function updates the moves made in the game
+ */
+function moveCounter(){
+    moves++;
+    const movePane=document.querySelector('.moves');
+    movePane.innerHTML=moves;
+      if (moves===13 || moves===17){
+        removeStars();
+    }
+}
+/**
+ * This function updates the number of stars 
+ * according to the moves made in the game
+ */
+function removeStars(){
+    const theStars=document.querySelector('.stars');
+    const eachStar=theStars.firstElementChild;
+    eachStar.parentNode.removeChild(eachStar);
+}
+/**
+ * @description This function sets the timer
+ */
+function setTheTime(){
+    theClock=setInterval(function(){
+        theTime++;
+        countdown();
+    },1000);
+}
+/**
+ * @description This function starts the countdown
+ */
+function countdown(){
+    let minutes=Math.floor(theTime/60);
+    let seconds=theTime%60;
+    timerBoard=document.querySelector('.clock');
+    if(theTime<10){
+        timerBoard.innerHTML=minutes+':0'+seconds;
+    }else{
+        timerBoard.innerHTML=minutes+':'+seconds;
+    }
+    
+}
+function stopTime(){
+    clearInterval(theClock);
+}
+/**
+ * This is the modal of the game
+ * the time details, moves made and the stars are updated here
+ */
+function displayMessage(){
+    if(completeArray.length===16){
+        stopTime();
+        const u=document.querySelector('.winning_tab');
+        u.classList.toggle('hide');
+        fillTheTimeDetail();
+        fillTheMovesDetail();
+        fillTheStarDetails();
+    }
+}
+function fillTheTimeDetail(){
+    const timeUnit=document.querySelector('.time_taken');
+    const a=timeUnit.firstElementChild;
+    let minutes=Math.floor(theTime/60);
+    let seconds=theTime%60;
+    a.innerHTML=minutes+':'+seconds;
+}
+function fillTheMovesDetail(){
+    const moveUnit=document.querySelector('.moves_made');
+    const b=moveUnit.firstElementChild;
+    b.innerHTML=moves;
+}
+function fillTheStarDetails(){
+    const starUnit=document.querySelector('.stars_number');
+    const c=starUnit.firstElementChild;
+    if(moves<14){
+        c.innerHTML=' 3 STARS!';
+    }else if(moves>13 && moves<17){
+        c.innerHTML=' 2 STARS!';
+    }else{
+        c.innerHTML=' 1 STAR!';
+    }
+}
+/**
+ * @description This function refreshes the game
+ */
+restartButton.addEventListener('click',listenToRestartEvent)
+function listenToRestartEvent(){
+    location.reload();
 }
