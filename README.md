@@ -45,3 +45,7 @@ After all the matches have been achieved, the `displayMessage()` function is run
 
 ## Hosting
 [This project has been hosted in github pages HERE]( https://wekesa931.github.io/Memory-Game/)
+## Dependencies
+I used the following fonts from google;
+1. [Font Awesome]( https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css)
+2. [Font Coda]( https://fonts.googleapis.com/css?family=Coda)
