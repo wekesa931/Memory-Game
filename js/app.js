@@ -1,8 +1,6 @@
 /**
  * I began with the variable declarations
  */
-
-
 let theTime=0;
 let minutes=theTime/60;
 let seconds=theTime%60;
@@ -10,6 +8,7 @@ let moves=0;
 let timerOff=true;
 let theClock;
 let completeArray=[];
+let openedCards=[];
 const allCards=document.querySelector('.deck');  
 const restartButton=document.querySelector('.restart');
 
@@ -61,12 +60,15 @@ function listenToCardEvent(evt){
     }
     if(evt.target.nodeName === 'LI'){
         const eachCard=evt.target;
+        
         if(!openedCards.includes(eachCard) &&
             !eachCard.classList.contains('match')){
-            togglingUnit(eachCard);
-            addOpenedCards(eachCard);
-        }
-        
+                if(openedCards.length<2){
+                    openedCards.push(eachCard);
+                    togglingUnit(eachCard);
+                    addOpenedCards(eachCard);
+                    }    
+        }    
     }
 }
 /**
@@ -75,9 +77,8 @@ function listenToCardEvent(evt){
  */
 
 function togglingUnit(eachCard){
-    eachCard.classList.toggle('open');
-    eachCard.classList.toggle('show');
-   
+        eachCard.classList.toggle('open');
+        eachCard.classList.toggle('show');    
 }
 
 /**
@@ -88,15 +89,12 @@ function togglingUnit(eachCard){
  */
 
 function addOpenedCards(eachCard){
-    openedCards.push(eachCard);
+    
     if(openedCards.length===2){
         moveCounter();
         compareCards();
-        openedCards.length=0;
     }
 }
-
-let openedCards=[];
 /**
  * the cards are comppared here
  */
@@ -109,16 +107,23 @@ function compareCards(){
     if(xx===yy){
         x.classList.toggle('match');
         y.classList.toggle('match');
+        clearList();
         completeArray.push(x);
         completeArray.push(y);
         displayMessage();
         } else{
-        setTimeout(function(){
+           setTimeout(function(){
             hideTheCards(x.classList);
             hideTheCards(y.classList);
+            clearList();
         },777);
+        
     }
 }
+function clearList(){
+    openedCards.length=0;
+}
+
 /**
  * 
  * Untoggled cards are closed
@@ -167,9 +172,11 @@ function countdown(){
         timerBoard.innerHTML=minutes+':0'+seconds;
     }else{
         timerBoard.innerHTML=minutes+':'+seconds;
-    }
-    
+    }   
 }
+/**
+ * @description This function stops the time
+ */
 function stopTime(){
     clearInterval(theClock);
 }
