@@ -1,7 +1,5 @@
 # Memory Game Project
 
-## Table of Contents
-
 ### Card shuffling
 First, i wrote the function which picks a list of all the cards from the `deck`, sends them to the `shuffle()` function and returns them with a different order. The cards are then appended to the parent element, not as additional child elements but it it the order of arrangement that is changed. This is line **line 23-43 JS**
 ### Setting the Event Listener
